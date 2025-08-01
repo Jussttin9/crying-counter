@@ -33,6 +33,7 @@
           </div>
           <button v-if="cursorHidden" class="drop-hitbox" @click="addDrop"></button>
           <div class="counter">{{ curDrops }}</div>
+          <div class="color" :style="{'background-color': `color-mix(in srgb, rgb(105, 202, 255) ${100 - happyDropPercentage}%, rgb(255, 145, 163) ${happyDropPercentage}%)`}">{{ happyDropPercentage }}</div>
         </div>
     </body>
 </html>

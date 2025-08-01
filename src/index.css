@@ -172,3 +172,12 @@
   border: solid 2px black;
   padding: 2rem;
 }
+
+/* Color test */
+.color {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  border: solid 2px black;
+  padding: 2rem;
+}

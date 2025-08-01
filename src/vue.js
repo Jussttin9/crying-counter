@@ -7,10 +7,12 @@ const liquidLevelThresh = Math.round(maxDrops / numLiquidLevels);
 const instance = createApp ({
     data() {
         return {
-            curDrops: 24,
+            curDrops: 0,
             liquidLevelSrc: "",
             liquidLevel: 0,
-            cursorHidden: null
+            cursorHidden: null,
+            happyDropCount: 0,
+            happyDropPercentage: 0
         };
     },
     watch: {
@@ -45,7 +47,10 @@ const instance = createApp ({
         addDrop() {
             if (document.body.style.cursor == "none") {
                 this.curDrops += 1;
-                console.log(this.cursorHidden);
+                if (this.cursorHidden === 'happy') {
+                    this.happyDropCount += 1;
+                }
+                this.happyDropPercentage = parseInt((this.happyDropCount / this.curDrops) * 100)
             }
         },
     }
