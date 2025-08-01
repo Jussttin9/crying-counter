@@ -4,25 +4,35 @@
     <meta charset="UTF-8" />
     <title>Hello World!</title>
     <link rel="stylesheet" href="index.css" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <script defer src="vue.js" type="module"></script>
     <script defer src="pot.js" type="module"></script>
   </head>
-  <img class="dropper" id="happy_dropper" src="../assets/Tears of Joy/Dropper_happy.PNG" />
-  <img class="dropper" id="sad_dropper" src="../assets/Tears of Sadness/Dropper_sad.PNG" />
+  <img class="dropper" id="happy-dropper" src="../assets/Tears of Joy/Dropper_happy.PNG" />
+  <img class="dropper" id="sad-dropper" src="../assets/Tears of Sadness/Dropper_sad.PNG" />
   <body class="background">
         <div class="shelf-level">
             <div class="shelf">
-              <img class="pot" id="sad_pot" src="../assets/Tears of Sadness/Dropper_Stationary_sad.png" alt="blue pot">
-              <img class="pot" id="happy_pot" src="../assets/Tears of Joy/Dropper_Stationary_happy.png" alt="pink pot">
+              <img class="pot" id="sad-pot" src="../assets/Tears of Sadness/Dropper_Stationary_sad.png" alt="blue pot">
+              <img class="pot happy-pot" id="happy-pot" src="../assets/Tears of Joy/Dropper_Stationary_happy.png" alt="pink pot">
             </div>
             <div class="shelf">
               <img id="books" src="../assets/Books.png" alt="books"/>
             </div>
         </div>
-        <div class="table">
-            <img class="jar" id="clear-jar" src="../assets/Jar/clear_jar.PNG" alt="clear jar">
+        <div id="app">
+          <div class="table">
             <img class="jar" id="jar-shader" src="../assets/Jar/jar_shader.PNG" alt="jar shader">
-            <img class="jar" id="tears" src="../assets/Jar/Liquid_levels/level_4.PNG" alt="tears">
+            <div id="tears-img" class="jar">
+              <img v-if="liquidLevelSrc.length !== 0" id="tears" :src="liquidLevelSrc" :style="jarStyle" alt="tears">
+              <!-- <div id="tears-overlay"></div> -->
+            </div>
+            <img class="jar" id="clear-jar" src="../assets/Jar/clear_jar.PNG" alt="clear jar">
             <img class="jar" id="jar-glare" src="../assets/Jar/jar_glare.PNG" alt="jar glare">
+            <img class="jar" id="jar-lid" src="../assets/Jar/jar_lid.PNG" alt="jar lid">
+          </div>
+          <button v-if="cursorHidden" class="drop-hitbox" @click="addDrop"></button>
+          <div class="counter">{{ curDrops }}</div>
         </div>
     </body>
 </html>

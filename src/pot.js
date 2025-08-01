@@ -1,4 +1,5 @@
 import { sad_pot, happy_pot } from "./pot_data.js";
+import app from "./vue.js";
 
 let curDropper = null;
 let sadDropperOut = false;
@@ -19,7 +20,10 @@ document.getElementById(happy_pot.potID).addEventListener('click', () => {
 function toggleSadDropper(hideCursor = false) {
     if (sadDropperOut) {
         document.removeEventListener('mousemove', trackSad);
-        if (!hideCursor) document.body.style.cursor = "default";
+        if (!hideCursor) {
+            document.body.style.cursor = "default";
+            app.cursorHidden = null;
+        }
         reset(sad_pot);
     } else {
         const pot = document.getElementById(sad_pot.potID);
@@ -27,11 +31,11 @@ function toggleSadDropper(hideCursor = false) {
 
         document.addEventListener('mousemove', trackSad);
         document.body.style.cursor = "none";
+        app.cursorHidden = "sad";
+
         dropper.style.display = "block";
         pot.src = sad_pot.dropperEmptysrc;
-        pot.style.height = "6.5rem";
-        pot.style.width = "6.5rem";
-        pot.style.left = sad_pot.potID === "happy_pot" ? "10.2rem" : "0.15rem";
+        pot.classList.add('sad-pot-visible');
     }
     sadDropperOut = !sadDropperOut;
 }
@@ -39,7 +43,10 @@ function toggleSadDropper(hideCursor = false) {
 function toggleHappyDropper(hideCursor = false) {
     if (happyDropperOut) {
         document.removeEventListener('mousemove', trackHappy);
-        if (!hideCursor) document.body.style.cursor = "default";
+        if (!hideCursor) {
+            document.body.style.cursor = "default";
+            app.cursorHidden = null;
+        }
         reset(happy_pot);
     } else {
         const pot = document.getElementById(happy_pot.potID);
@@ -47,11 +54,10 @@ function toggleHappyDropper(hideCursor = false) {
 
         document.addEventListener('mousemove', trackHappy);
         document.body.style.cursor = "none";
+        app.cursorHidden = "happy";
         dropper.style.display = "block";
         pot.src = happy_pot.dropperEmptysrc;
-        pot.style.height = "6.5rem";
-        pot.style.width = "6.5rem";
-        pot.style.left = happy_pot.potID === "happy_pot" ? "10.2rem" : "0.15rem";
+        pot.classList.add('happy-pot-visible');
     }
     happyDropperOut = !happyDropperOut;
 }
@@ -60,11 +66,9 @@ function reset(pot) {
     const curPot = document.getElementById(pot.potID);
     const dropper = document.getElementById(pot.dropperID);
     dropper.style.display = "none";
-    dropper.style.left = pot.potID === "happy_pot" ? "10.5rem" : "0.5rem";
+    dropper.style.left = pot.potID === "happy-pot" ? "10.5rem" : "0.5rem";
     curPot.src = pot.dropperFilledsrc;
-    curPot.style.height = "";
-    curPot.style.width = "";
-    curPot.style.left = "";
+    curPot.classList.remove(`${pot.potID}-visible`);
 }
 
 function trackHappy(e) {
